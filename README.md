@@ -14,9 +14,34 @@
     touch scrapypipeline/spiders/json_spider.py
     ```
 3. Configure the project
+    - Install Docker Desktop for MacOS
+    - Add Docker Compose to PATH
+    ```
+    vim ~/.zshrc
+    export PATH=/usr/local/bin:$PATH
+    source ~/.zshrc
+    ```
+    - Start Docker Daemon
+    ```
+    open /Applications/Docker.app
+    ```
+3. Start the project
+    ```
+    docker-compose up --build
+    ```
+
     
 
 ## Scrapy Engine Workflow
+- Initialize Spider: Start with the start_urls.
+- Request Processing: Send initial requests to the scheduler.
+- Download: Downloader fetches the web pages.
+- Response Handling: Responses are sent back to the engine and then to the spider’s parse method.
+- Data Extraction and Follow-up Requests: The parse method extracts data and generates new requests.
+- Item Processing: Extracted items are sent to the item pipeline for further processing.
+- Output: Finally, processed items are stored in PostSQL and other storage.
+
+### Components of Scrapy
 ![alt text](image.png)
 - Scheduler: The scheduler queues requests and feeds them to the Scrapy engine when it’s ready.
 - Downloader: The downloader fetches the web pages and sends the responses back to the Scrapy engine.
@@ -25,12 +50,5 @@ This process is illustrated by the parse method, where items are extracted, and 
 - Item Pipeline: Items extracted by the spider are sent through the item pipeline where they can be processed further (e.g., cleaned, validated, and stored in a database).
 - Downloader Middlewares and Spider Middlewares: These are hooks that can modify requests and responses as they pass through the Scrapy engine.
 
-
-### Example of the Scrapy Workflow
-- Initialize Spider: Start with the start_urls.
-- Request Processing: Send initial requests to the scheduler.
-- Download: Downloader fetches the web pages.
-- Response Handling: Responses are sent back to the engine and then to the spider’s parse method.
-- Data Extraction and Follow-up Requests: The parse method extracts data and generates new requests.
-- Item Processing: Extracted items are sent to the item pipeline for further processing.
-- Output: Finally, processed items are stored in the database or other storage.
+## Acknowledge
+https://scrapy-cookbook.readthedocs.io/zh-cn/latest/scrapy-01.html

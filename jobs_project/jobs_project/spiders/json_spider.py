@@ -5,7 +5,7 @@ class JobSpider(scrapy.Spider):
     name = 'job_spider'
     custom_settings = {
         'ITEM_PIPELINES': {
-            'jobs_project.pipelines.YourPipeline': 300,
+            'scrapypipeline.pipelines.ScrapypipelinePipeline': 300,
         },
     }
 
