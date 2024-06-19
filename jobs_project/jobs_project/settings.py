@@ -7,11 +7,18 @@
 #     https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://docs.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = "scrapypipeline"
+BOT_NAME = "jobs_project"
 
-SPIDER_MODULES = ["scrapypipeline.spiders"]
-NEWSPIDER_MODULE = "scrapypipeline.spiders"
+SPIDER_MODULES = ["jobs_project.spiders"]
+NEWSPIDER_MODULE = "jobs_project.spiders"
+ITEM_PIPELINES = {
+   'jobs_project.pipelines.MyPipeline': 300,
+}
 
+import logging
+
+LOG_LEVEL = 'DEBUG'
+LOG_FORMAT = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = "scrapypipeline (+http://www.yourdomain.com)"

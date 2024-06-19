@@ -52,3 +52,4 @@ This process is illustrated by the parse method, where items are extracted, and 
 
 ## Acknowledge
 https://scrapy-cookbook.readthedocs.io/zh-cn/latest/scrapy-01.html
+https://scrapeops.io/python-scrapy-playbook/scrapy-save-data-postgres/

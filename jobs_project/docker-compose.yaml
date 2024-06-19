@@ -1,0 +1,33 @@
+version: '26'
+services:
+  scrapy:
+    build: .
+    volumes:
+      - .:/usr/src/app
+    working_dir: /usr/src/app
+    depends_on:
+      - postgres
+    environment:
+      - POSTGRES_DB=mydatabase
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_HOST=postgres
+
+      
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  # mongo: # Optional
+  #   image: mongo
+  # redis: # Optional
+  #   image: redis
+
+volumes:
+  postgres_data:
