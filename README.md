@@ -30,8 +30,8 @@
     docker-compose up --build
     ```
 
-    
-
+## Project Structure
+![alt text](image-1.png)
 ## Scrapy Engine Workflow
 - Initialize Spider: Start with start_requests().
 - Request Processing: Send initial requests to the scheduler.
