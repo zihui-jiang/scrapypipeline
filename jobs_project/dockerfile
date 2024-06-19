@@ -9,11 +9,7 @@ RUN apt-get update && apt-get install -y postgresql-client && rm -rf /var/lib/ap
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
-# CMD ["scrapy", "crawl", "job_spider"]
-# COPY entrypoint.sh /usr/src/app/entrypoint.sh
-# RUN chmod +x /usr/src/app/entrypoint.sh
-# ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
-# Make the entrypoint script executable
+
 RUN chmod +x /usr/src/app/entrypoint.sh
 
 # Run the entrypoint script
