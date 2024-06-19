@@ -8,10 +8,17 @@
 from itemadapter import ItemAdapter
 import psycopg2
 import logging
+import redis
+import os
 
 class MyPipeline:
     def process_item(self, item, spider):
-        id = item['slug']
+        id = f"scrapy:item:{item['slug']}"
+        # Check if item already exists in Redis
+        if self.redis.exists(id):
+            logging.info(f"Item already processed: {item['slug']}")
+            return item
+        
         logging.info(f"Insert item: {id}")
         try:
             self.cursor.execute("""
@@ -33,6 +40,9 @@ class MyPipeline:
             ))
 
             self.connection.commit()
+
+            # Cache item in Redis
+            self.redis.set(id, 1)
         except Exception as e:
             self.connection.rollback()
             logging.error(f"Error inserting item: {e}")
@@ -65,10 +75,18 @@ class MyPipeline:
             longitude FLOAT,
             apply_url TEXT);
         """)
+
+        self.redis = redis.Redis(
+                host=os.getenv('REDIS_HOST', 'redis'),
+                port=os.getenv('REDIS_PORT', 6379),
+                db=0
+            )
+        spider.log('Database and Redis connections established', level=logging.INFO)
         
 
     def close_spider(self, spider):
-        
+        logging.info('Closing database and Redis connections')
         if self.connection:
-            logging.info('Closing database and Redis connections')
             self.connection.close()
+        if self.redis:
+            self.redis.close()

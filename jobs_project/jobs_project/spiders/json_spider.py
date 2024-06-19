@@ -24,7 +24,7 @@ class JobSpider(scrapy.Spider):
         # if you can't get this to work, do not waste too much time here
         # instead load the json file inside parse_page
         yield scrapy.Request(
-        url='file:///usr/src/app/s01.json',
+        url='file:///usr/src/app/s02.json',
         callback=self.parse_page,
         )
 
